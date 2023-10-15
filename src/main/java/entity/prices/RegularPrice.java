@@ -1,6 +1,6 @@
 package entity.prices;
 
-public class RegularPrice extends Price{
+public class RegularPrice implements Price {
     private static RegularPrice instance;
 
     private RegularPrice() {}

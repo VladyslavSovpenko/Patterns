@@ -4,6 +4,8 @@ import commands.AbstractCommand;
 import entity.Customer;
 import services.CustomerService;
 
+import java.util.Scanner;
+
 public class CreateCustomerCommand extends AbstractCommand {
 
     private static CustomerService customerService = CustomerService.getInstance();
@@ -22,7 +24,9 @@ public class CreateCustomerCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(String text) {
-        customerService.post(new Customer(text));
+    public void execute(Scanner scanner) {
+        System.out.println("Enter Customer name");
+        String line = scanner.nextLine();
+        customerService.post(new Customer(line));
     }
 }

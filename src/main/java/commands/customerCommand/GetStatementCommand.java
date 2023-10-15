@@ -7,28 +7,32 @@ import services.CustomerService;
 import java.util.List;
 import java.util.Scanner;
 
-public class GetAllCustomersCommand extends AbstractCommand {
+public class GetStatementCommand extends AbstractCommand {
 
     private static CustomerService customerService = CustomerService.getInstance();
-    private static final GetAllCustomersCommand getAllCustomersCommand = new GetAllCustomersCommand();
+    private static final GetStatementCommand getStatementCommand = new GetStatementCommand();
 
-    private GetAllCustomersCommand() {
+    private GetStatementCommand() {
     }
 
-    public static GetAllCustomersCommand getInstance() {
-        return getAllCustomersCommand;
+    public static GetStatementCommand getInstance() {
+        return getStatementCommand;
     }
 
     @Override
     public String getCommandName() {
-        return "getAllCustomer";
+        return "getStatement";
     }
 
     @Override
     public void execute(Scanner scanner) {
+        System.out.println("Enter Customer id to find and get Statement\n");
         List<Customer> allCustomers = customerService.getAllCustomers();
         if (!allCustomers.isEmpty()) {
             allCustomers.forEach(System.out::println);
+
+            Customer entity = ((Customer) customerService.get(scanner.nextLine()));
+            System.out.println(entity._getStatement());
         } else {
             System.out.println("Customer list is empty");
         }

@@ -4,6 +4,8 @@ import commands.AbstractCommand;
 import entity.Customer;
 import services.CustomerService;
 
+import java.util.Scanner;
+
 public class UpdateCustomerCommand extends AbstractCommand {
 
     private static CustomerService customerService = CustomerService.getInstance();
@@ -22,13 +24,14 @@ public class UpdateCustomerCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(String text) {
-        String[] strings = text.split(" ");
-        StringBuilder builder = new StringBuilder();
-        for (int i = 1; i < strings.length; i++) {
-            builder.append(i);
-        }
-        Customer customer = new Customer(builder.toString());
-        customerService.update(strings[0], customer);
+    public void execute(Scanner scanner) {
+        System.out.println("Enter customer name to find");
+        String customerName = scanner.nextLine();
+
+        System.out.println("Enter customer info to update");
+        String updatedName = scanner.nextLine();
+
+        Customer customer = new Customer(updatedName);
+        customerService.update(customerName, customer);
     }
 }

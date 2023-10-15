@@ -1,9 +1,10 @@
 package entity.prices;
 
-public class NewReleasePrice extends Price{
+public class NewReleasePrice implements Price {
     private static NewReleasePrice instance;
 
-    private NewReleasePrice() {}
+    private NewReleasePrice() {
+    }
 
     public static NewReleasePrice getInstance() {
         if (instance == null) {
@@ -18,7 +19,6 @@ public class NewReleasePrice extends Price{
         return "newRelease";
     }
 
-    @Override
     public double getCharge(int daysRented) {
         return (daysRented * 3);
     }

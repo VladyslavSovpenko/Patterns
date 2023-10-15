@@ -6,6 +6,7 @@ import entity.Rental;
 import utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CustomerService implements EntityService {
 
@@ -21,8 +22,8 @@ public class CustomerService implements EntityService {
     }
 
     @Override
-    public Entity get(String name) {
-        return warehouse.getCustomerByName(name);
+    public Entity get(String id) {
+        return warehouse.getCustomerById(id);
     }
 
     @Override
@@ -49,9 +50,16 @@ public class CustomerService implements EntityService {
         return warehouse.getAllCustomers();
     }
 
-    public void addRentalToCustomer(String name, String rentalId) {
-        Customer customer = warehouse.getCustomerByName(name);
-        Rental entity = ((Rental) rentalService.get(rentalId));
-        customer.addRental(entity);
+    public void addRentalToCustomer(String custId, String rentalId) {
+        Customer entity = warehouse.getCustomerById(custId);
+
+        Optional<Rental> rental = rentalService.getAllRentals().stream()
+                .filter(r -> r.getId() == Integer.parseInt(rentalId))
+                .findFirst();
+
+        rental.ifPresent(entity::addRental);
+
+        System.out.println(Utils.RENTAL_ADDED);
+
     }
 }

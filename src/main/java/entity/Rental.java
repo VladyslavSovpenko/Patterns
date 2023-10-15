@@ -1,34 +1,49 @@
 package entity;
 
-public class Rental implements Entity {
-    private int id = 0;
-    private final Movie movie;
-    private final int daysRented;
+import utils.ConfigReader;
 
-    public Rental(Movie movie, int daysRented) {
-        this.id = id++;
+public class Rental implements Entity {
+
+    private static ConfigReader configReader = ConfigReader.getInstance();
+    private static Integer nextId = configReader.getInt("rental");
+    private Integer id;
+    private Movie movie;
+    private Integer daysRented;
+
+    public Rental(Movie movie, Integer daysRented) {
+        this.id = nextId++;
+        configReader.set("rental", String.valueOf(nextId));
         this.movie = movie;
         this.daysRented = daysRented;
     }
 
-    public int getDaysRented() {
-        return daysRented;
+    public Rental() {
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Movie getMovie() {
         return movie;
     }
 
-    public double getCharge() {
-        return movie.getCharge(daysRented);
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
-    public int getFrequentRenterPoints() {
+    public Integer getDaysRented() {
+        return daysRented;
+    }
+
+    public void setDaysRented(Integer daysRented) {
+        this.daysRented = daysRented;
+    }
+
+    public double _charge() { return movie.getCharge(daysRented); }
+
+    public int _frequentRenterPoints() {
         return movie.getFrequentRenterPoints(daysRented);
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override

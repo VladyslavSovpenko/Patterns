@@ -1,24 +1,21 @@
 package entity.prices;
 
-public class ChildrenPrice extends Price{
-    private static ChildrenPrice instance;
+import commands.customerCommand.AddRentalToCustomerCommand;
+
+public class ChildrenPrice implements Price{
+
+    private static ChildrenPrice childrenPrice = new ChildrenPrice();
 
     private ChildrenPrice() {}
 
     public static ChildrenPrice getInstance() {
-        if (instance == null) {
-            instance = new ChildrenPrice();
-        }
-
-        return instance;
+        return childrenPrice;
     }
 
-    @Override
     public String getPriceName() {
         return "children";
     }
 
-    @Override
     public double getCharge(int daysRented) {
         double total = 1.5;
 

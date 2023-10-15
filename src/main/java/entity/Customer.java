@@ -1,18 +1,29 @@
 package entity;
 
+import utils.ConfigReader;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer implements Entity {
 
+    private static ConfigReader configReader = ConfigReader.getInstance();
+    private static Integer nextId = configReader.getInt("customer");
+    private Integer id;
     private String name;
     private List<Rental> rentals = new ArrayList<>();
 
     public Customer(String name) {
+        this.id = nextId++;
+        configReader.set("customer", String.valueOf(nextId));
         this.name = name;
     }
 
     public Customer() {
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getName() {
@@ -31,7 +42,7 @@ public class Customer implements Entity {
         rentals.add(rental);
     }
 
-    public String getStatement() {
+    public String _getStatement() {
         StringBuilder statement = new StringBuilder();
         statement.append("Rental Record for ")
                 .append(name)
@@ -51,7 +62,7 @@ public class Customer implements Entity {
                     .append(rental.getDaysRented())
                     .append('\t')
                     .append('\t')
-                    .append(rental.getCharge())
+                    .append(rental._charge())
                     .append('\n');
         }
         statement.append("Amount owed is ")
@@ -66,7 +77,7 @@ public class Customer implements Entity {
     private double getTotalCharge() {
         double total = 0.0;
         for (Rental rental : rentals) {
-            total += rental.getCharge();
+            total += rental._charge();
         }
         return total;
     }
@@ -74,7 +85,7 @@ public class Customer implements Entity {
     private int getTotalFrequentRenterPoints() {
         int total = 0;
         for (Rental rental : rentals) {
-            total += rental.getFrequentRenterPoints();
+            total += rental._frequentRenterPoints();
         }
         return total;
     }
@@ -82,6 +93,7 @@ public class Customer implements Entity {
     @Override
     public String toString() {
         return "Customer{" +
+                "id='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", rentals=" + rentals +
                 '}';

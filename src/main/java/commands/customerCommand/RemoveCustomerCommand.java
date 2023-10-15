@@ -1,7 +1,11 @@
 package commands.customerCommand;
 
 import commands.AbstractCommand;
+import entity.Customer;
 import services.CustomerService;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class RemoveCustomerCommand extends AbstractCommand {
 
@@ -21,7 +25,15 @@ public class RemoveCustomerCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(String text) {
-        customerService.delete(text);
+    public void execute(Scanner scanner) {
+        List<Customer> allCustomers = customerService.getAllCustomers();
+        if (!allCustomers.isEmpty()) {
+            allCustomers.forEach(w -> System.out.println(w));
+            System.out.println("Enter customer to remove");
+            String customerName = scanner.nextLine();
+            customerService.delete(customerName);
+        } else {
+            System.out.println("Customers list is empty");
+        }
     }
 }

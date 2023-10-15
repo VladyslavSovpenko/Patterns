@@ -4,6 +4,8 @@ import commands.AbstractCommand;
 import exceptions.CommandNotFoundException;
 import utils.Utils;
 
+import java.util.Scanner;
+
 public class CommandHandler {
 
     private static final CommandHandler commandHandler = new CommandHandler();
@@ -15,11 +17,10 @@ public class CommandHandler {
         return commandHandler;
     }
 
-    public void handleCommand(String text) {
+    public void handleCommand(String text, Scanner scanner) {
         if (isCommand(text)) {
             AbstractCommand command = getCommand(getCommandName(text));
-            text = text.contains("All") ? text : text.substring(text.indexOf(" "));
-            command.execute(text.trim());
+            command.execute(scanner);
         } else {
             System.out.println("Unknown command, command list is: \n" + getListOfCommands());
         }
@@ -39,7 +40,7 @@ public class CommandHandler {
         if (text.contains("All")) {
             return text;
         }
-        return text.substring(0, text.indexOf(" "));
+        return text;
     }
 
     private String getListOfCommands() {

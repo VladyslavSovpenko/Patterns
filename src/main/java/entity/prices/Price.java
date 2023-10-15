@@ -1,11 +1,11 @@
 package entity.prices;
 
-public abstract class Price {
-    public String getPriceName() {
-        return "default";
-    }
-    public abstract double getCharge(int daysRented);
-    public int getFrequentRenterPoints(int daysRented) {
+public interface Price {
+    String getPriceName();
+
+    double getCharge(int daysRented);
+
+    default int getFrequentRenterPoints(int daysRented) {
         return 1;
     }
 }

@@ -3,6 +3,8 @@ package commands.customerCommand;
 import commands.AbstractCommand;
 import services.CustomerService;
 
+import java.util.Scanner;
+
 public class GetCustomerCommand extends AbstractCommand {
 
     private static CustomerService customerService = CustomerService.getInstance();
@@ -21,7 +23,8 @@ public class GetCustomerCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(String text) {
-        System.out.println(customerService.get(text));
+    public void execute(Scanner scanner) {
+        System.out.println("Enter Customer id to find");
+        System.out.println(customerService.get(scanner.nextLine()));
     }
 }

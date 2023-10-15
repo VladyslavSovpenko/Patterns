@@ -12,7 +12,7 @@ public class ExpressionsApp {
         Scanner scanner = new Scanner(System.in);
         String text = scanner.nextLine();
         while (!"exit".equalsIgnoreCase(text)) {
-            commandHandler.handleCommand(text);
+            commandHandler.handleCommand(text, scanner);
             text = scanner.nextLine();
         }
     }
